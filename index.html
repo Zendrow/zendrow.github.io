@@ -2,12 +2,7 @@
 <html>
 
 <head>
-   
-</head>
-
-<body>
-    <div>
-        <script>
+   <script>
             function onButtonClick() {
                 log('Requesting Bluetooth Device...');
                 navigator.bluetooth.requestDevice(
@@ -37,7 +32,10 @@
                 });
             }
         </script>  
+</head>
 
+<body>
+    <div>
         <button class="btn" id="pointerup" onclick="onButtonClick()">Try it</button>
     </div>
 </body>
