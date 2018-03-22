@@ -8,7 +8,7 @@
             document.getElementById("demo").innerHTML = "Requesting Bluetooth Device...";
             navigator.bluetooth.requestDevice({
             acceptAllDevices: true,
-            optionalServices: ['Generic Access']
+            optionalServices: [0x1800]
             })
                 .then(device => {
                     // Human-readable name of the device.
