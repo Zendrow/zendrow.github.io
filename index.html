@@ -4,15 +4,18 @@
 <head>
     <script>
         function onButtonClick() {
-            console.log('Requesting Bluetooth Device...');
-           navigator.bluetooth.requestDevice({
+            console.log('');
+            document.getElementById("demo").innerHTML = "Requesting Bluetooth Device...";
+            navigator.bluetooth.requestDevice({
             acceptAllDevices: true,
-            optionalServices: ['battery_service']
+            optionalServices: ['Generic Access']
             })
                 .then(device => {
                     // Human-readable name of the device.
                     console.log(device.name);
+                    document.getElementById("demo").innerHTML = "" + device.name;
                     console.log('Connecting to GATT Server...');
+                    document.getElementById("demo").innerHTML = "Connecting to GATT Server...";
                     return device.gatt.connect();
                 })
                 // .then(server => {
@@ -33,6 +36,7 @@
                 // })
                 .catch(error => {
                     console.log('Argh! ' + error);
+                    document.getElementById("demo").innerHTML = "rgh!" + error;
                 });
 
         }
