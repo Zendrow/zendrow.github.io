@@ -2,25 +2,44 @@
 <html>
 
 <head>
-   <script>
-    function onPress() {
-       navigator.bluetooth.requestDevice(
-         {{acceptAllDevices: true}, optionalServices: ['battery_service']})
+    <script>
+        function onButtonClick() {
+            log('Requesting Bluetooth Device...');
+            navigator.bluetooth.requestDevice(
+                { acceptAllDevices: true, optionalServices: ['battery_service'] })
+                .then(device => {
+                    log('Connecting to GATT Server...');
+                    return device.gatt.connect();
+                })
+                // .then(server => {
+                //     log('Getting Battery Service...');
+                //     return server.getPrimaryService('battery_service');
+                // })
+                // .then(service => {
+                //     log('Getting Battery Level Characteristic...');
+                //     return service.getCharacteristic('battery_level');
+                // })
+                // .then(characteristic => {
+                //     log('Reading Battery Level...');
+                //     return characteristic.readValue();
+                // })
+                // .then(value => {
+                //     let batteryLevel = value.getUint8(0);
+                //     log('> Battery Level is ' + batteryLevel + '%');
+                // })
+                .catch(error => {
+                    log('Argh! ' + error);
+                });
 
-            .then(device => {
-               // Human-readable name of the device.
-               console.log(device.name);
+        }
 
-               // Attempts to connect to remote GATT Server.
-               return device.gatt.connect();
-        })
-        .catch(error => { console.log(error); });
-)};</script>
+    </script>
+    
 </head>
 
 <body>
-    <div>       
-        <button class="btn" id="pointerup" onclick="onPress()">Try it</button>
+    <div>
+        <button class="btn" id="pointerup" onclick="onButtonClick()">Try it</button>
     </div>
 </body>
 
