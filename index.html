@@ -10,6 +10,8 @@
             optionalServices: ['battery_service']
             })
                 .then(device => {
+                    // Human-readable name of the device.
+                    console.log(device.name);
                     console.log('Connecting to GATT Server...');
                     return device.gatt.connect();
                 })
