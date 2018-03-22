@@ -3,14 +3,14 @@
 
 <head>
    <script>
-    button.addEventListener('pointerup', function (event) {
-    navigator.bluetooth.requestDevice({{acceptAllDevices: true}, optionalServices: ['battery_service']})
-        .then(device => {
-            // Human-readable name of the device.
-            console.log(device.name);
+    function onPress() {
+       navigator.bluetooth.requestDevice({{acceptAllDevices: true}, optionalServices: ['battery_service']})
+           .then(device => {
+               // Human-readable name of the device.
+               console.log(device.name);
 
-            // Attempts to connect to remote GATT Server.
-            return device.gatt.connect();
+               // Attempts to connect to remote GATT Server.
+               return device.gatt.connect();
         })
         .catch(error => { console.log(error); });
 });</script>
@@ -18,7 +18,7 @@
 
 <body>
     <div>       
-        <button class="btn" id="pointerup">Try it</button>
+        <button class="btn" id="pointerup" onclick="onPress()">Try it</button>
     </div>
 </body>
 
