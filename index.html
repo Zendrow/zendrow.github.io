@@ -19,15 +19,15 @@
                     return device.gatt.connect();
                 })
                  .then(server => {
-                     log('Getting Battery Service...');
+                     console.log('Getting Battery Service...');
                      return server.getPrimaryService('battery_service');
                  })
                 .then(service => {
-                     log('Getting Battery Level Characteristic...');
+                     console.log('Getting Battery Level Characteristic...');
                      return service.getCharacteristic('battery_level');
                  })
                  .then(characteristic => {
-                     log('Reading Battery Level...');
+                     console.log('Reading Battery Level...');
                      return characteristic.readValue();
                  })
                  .then(value => {
