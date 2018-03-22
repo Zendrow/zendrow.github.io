@@ -4,8 +4,9 @@
 <head>
    <script>
     function onPress() {
-       navigator.bluetooth.requestDevice({{acceptAllDevices: true}, optionalServices: ['battery_service']})
-           .then(device => {
+       navigator.bluetooth.requestDevice(
+            {acceptAllDevices: true})
+            .then(device => {
                // Human-readable name of the device.
                console.log(device.name);
 
