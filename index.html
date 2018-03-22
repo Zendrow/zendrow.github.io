@@ -4,7 +4,7 @@
 <head>
    <script>
     button.addEventListener('pointerup', function (event) {
-    navigator.bluetooth.requestDevice()
+    navigator.bluetooth.requestDevice({{acceptAllDevices: true}, optionalServices: ['battery_service']})
         .then(device => {
             // Human-readable name of the device.
             console.log(device.name);
