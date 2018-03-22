@@ -5,7 +5,7 @@
    <script>
             function onButtonClick() {
                 console.log('Requesting Bluetooth Device...');
-                chrome.bluetooth.requestDevice()
+                navigator.bluetooth.requestDevice()
                 .then(device => {
                 console.log('Connecting to GATT Server...');
                 return device.gatt.connect();
