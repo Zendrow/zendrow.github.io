@@ -8,7 +8,7 @@
             document.getElementById("demo").innerHTML = "Requesting Bluetooth Device...";
             navigator.bluetooth.requestDevice({
             acceptAllDevices: true,
-            optionalServices: [0x1800]
+            optionalServices: ['battery_service']
             })
                 .then(device => {
                     // Human-readable name of the device.
@@ -18,22 +18,22 @@
                     document.getElementById("demo").innerHTML = "Connecting to GATT Server...";
                     return device.gatt.connect();
                 })
-                // .then(server => {
-                //     log('Getting Battery Service...');
-                //     return server.getPrimaryService('battery_service');
-                // })
-                // .then(service => {
-                //     log('Getting Battery Level Characteristic...');
-                //     return service.getCharacteristic('battery_level');
-                // })
-                // .then(characteristic => {
-                //     log('Reading Battery Level...');
-                //     return characteristic.readValue();
-                // })
-                // .then(value => {
-                //     let batteryLevel = value.getUint8(0);
-                //     log('> Battery Level is ' + batteryLevel + '%');
-                // })
+                 .then(server => {
+                     log('Getting Battery Service...');
+                     return server.getPrimaryService('battery_service');
+                 })
+                .then(service => {
+                     log('Getting Battery Level Characteristic...');
+                     return service.getCharacteristic('battery_level');
+                 })
+                 .then(characteristic => {
+                     log('Reading Battery Level...');
+                     return characteristic.readValue();
+                 })
+                 .then(value => {
+                     let batteryLevel = value.getUint8(0);
+                     log('> Battery Level is ' + batteryLevel + '%');
+                 })
                 .catch(error => {
                     console.log('Argh! ' + error);
                     document.getElementById("demo").innerHTML = "rgh!" + error;
