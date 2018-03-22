@@ -4,13 +4,13 @@
 <head>
     <script>
         function onButtonClick() {
-            log('Requesting Bluetooth Device...');
+            console.log('Requesting Bluetooth Device...');
            navigator.bluetooth.requestDevice({
             acceptAllDevices: true,
             optionalServices: ['battery_service']
             })
                 .then(device => {
-                    log('Connecting to GATT Server...');
+                    console.log('Connecting to GATT Server...');
                     return device.gatt.connect();
                 })
                 // .then(server => {
@@ -30,7 +30,7 @@
                 //     log('> Battery Level is ' + batteryLevel + '%');
                 // })
                 .catch(error => {
-                    log('Argh! ' + error);
+                    console.log('Argh! ' + error);
                 });
 
         }
