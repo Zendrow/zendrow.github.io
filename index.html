@@ -5,8 +5,10 @@
     <script>
         function onButtonClick() {
             log('Requesting Bluetooth Device...');
-            navigator.bluetooth.requestDevice(
-                { acceptAllDevices: true, optionalServices: ['battery_service'] })
+           navigator.bluetooth.requestDevice({
+            acceptAllDevices: true,
+            optionalServices: ['battery_service']
+            })
                 .then(device => {
                     log('Connecting to GATT Server...');
                     return device.gatt.connect();
