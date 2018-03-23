@@ -7,8 +7,7 @@
             console.log('');
             document.getElementById("demo").innerHTML = "Requesting Bluetooth Device...";
             navigator.bluetooth.requestDevice({
-            acceptAllDevices: true,
-            optionalServices: ['battery_service']
+                filters: [{ services: ['battery_service'] }]
                 // filters: [{
                 //     services: ['00000000-0000-0000-0000-000000000000']
                 // }]
