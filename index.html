@@ -21,14 +21,10 @@
                     document.getElementById("demo").innerHTML = "Connecting to GATT Server...";
                     return device.gatt.connect();
                 })
-                 .then(server => {
-                     console.log('Getting Battery Service...');
-                     return server.getPrimaryService(0x1801);
+                .then(service => {
+                     console.log('Getting Battery Level Characteristic...');
+                     return service.getCharacteristic('battery_level');
                  })
-                // .then(service => {
-                //      console.log('Getting Battery Level Characteristic...');
-                //      return service.getCharacteristic('battery_level');
-                //  })
                 //  .then(characteristic => {
                 //      console.log('Reading Battery Level...');
                 //      return characteristic.readValue();
