@@ -18,22 +18,22 @@
                     document.getElementById("demo").innerHTML = "Connecting to GATT Server...";
                     return device.gatt.connect();
                 })
-                 .then(server => {
-                     console.log('Getting Battery Service...');
-                     return server.getPrimaryService('battery_service');
-                 })
-                .then(service => {
-                     console.log('Getting Battery Level Characteristic...');
-                     return service.getCharacteristic('battery_level');
-                 })
-                 .then(characteristic => {
-                     console.log('Reading Battery Level...');
-                     return characteristic.readValue();
-                 })
-                 .then(value => {
-                     let batteryLevel = value.getUint8(0);
-                     log('> Battery Level is ' + batteryLevel + '%');
-                 })
+                //  .then(server => {
+                //      console.log('Getting Battery Service...');
+                //      return server.getPrimaryService('battery_service');
+                //  })
+                // .then(service => {
+                //      console.log('Getting Battery Level Characteristic...');
+                //      return service.getCharacteristic('battery_level');
+                //  })
+                //  .then(characteristic => {
+                //      console.log('Reading Battery Level...');
+                //      return characteristic.readValue();
+                //  })
+                //  .then(value => {
+                //      let batteryLevel = value.getUint8(0);
+                //      log('> Battery Level is ' + batteryLevel + '%');
+                //  })
                 .catch(error => {
                     console.log('Argh! ' + error);
                     document.getElementById("demo").innerHTML = "rgh!" + error;
