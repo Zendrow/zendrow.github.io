@@ -14,6 +14,14 @@
             console.log('with ' + JSON.stringify(options));
             navigator.bluetooth.requestDevice(options)
                 .then(device => {
+                    if (!device.gatt.connected) {
+                        console.log("devo connettere");
+                        return device.gatt.connect();
+                    } else {
+                        console.log("già connesso");
+                        // Already connected.
+                        return Promise.resolve();
+                    }
                     console.log('> Name:             ' + device.name);
                     console.log('> Id:               ' + device.id);
                     console.log('> Connected:        ' + device.gatt.connected);
