@@ -4,30 +4,30 @@
 <head>
     <script>
         function onButtonClick() {
-            
+
 
             let options = {};
-            
+
             options.acceptAllDevices = true;
-            
-            console.log('Requesting Bluetooth Device...');
-            console.log('with ' + JSON.stringify(options));
+
+            document.getElementById("demo").innerHTML = 'Requesting Bluetooth Device...<br />';
+            document.getElementById("demo").innerHTML = 'with ' + JSON.stringify(options) + '<br />';
             navigator.bluetooth.requestDevice(options)
                 .then(device => {
                     if (!device.gatt.connected) {
-                        console.log("devo connettere");
+                        document.getElementById("demo").innerHTML = "devo connettere<br />";
                         return device.gatt.connect();
                     } else {
-                        console.log("già connesso");
+                        document.getElementById("demo").innerHTML = "già connesso<br />";
                         // Already connected.
                         return Promise.resolve();
                     }
-                    console.log('> Name:             ' + device.name);
-                    console.log('> Id:               ' + device.id);
-                    console.log('> Connected:        ' + device.gatt.connected);
+                    document.getElementById("demo").innerHTML = '> Name:             ' + device.name + '<br />';
+                    document.getElementById("demo").innerHTML = '> Id:               ' + device.id + '<br />';
+                    document.getElementById("demo").innerHTML = '> Connected:        ' + device.gatt.connected + '<br />';
                 })
                 .catch(error => {
-                    console.log('Argh! ' + error);
+                    document.getElementById("demo").innerHTML = 'Argh! ' + error + '<br />';
                 });
         }
     </script>
