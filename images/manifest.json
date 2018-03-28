@@ -3,11 +3,5 @@
     "short_name": "Zen",
     "display": "standalone",
     "background_color": "red",
-    "description": "A simply readable Hacker News app.",
-    "icons": [
-        {
-          "src": "/Poke Ball.ico",
-          "sizes": "128x128 256x256 512x512"
-        }
-      ]
+    "description": "A simply readable Hacker News app."
 }
