@@ -6,7 +6,12 @@
     "description": "A simply readable Hacker News app.",
     "icons": [
         {
-            "src": "../images/Poke Ball.png",
+            "src": "/Poke Ball-48x48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/Poke Ball-128x128.png",
             "sizes": "128x128",
             "type": "image/png"
         }
