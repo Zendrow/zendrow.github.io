@@ -23,7 +23,9 @@
                         document.getElementById("demo").innerHTML = "già connesso<br />";
                         // Already connected.
                         return Promise.resolve();
-                    }
+                    }                    
+                })
+                .then(device => {
                     document.getElementById("demo").innerHTML = '> Name:             ' + device.name + '<br />';
                     document.getElementById("demo").innerHTML = '> Id:               ' + device.id + '<br />';
                     document.getElementById("demo").innerHTML = '> Connected:        ' + device.gatt.connected + '<br />';
