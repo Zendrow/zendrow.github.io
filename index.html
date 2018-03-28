@@ -14,35 +14,66 @@
         crossorigin="anonymous"></script>
 
     <script>
+        // function onButtonClick() {
+
+
+        //     let options = {};
+
+        //     options.acceptAllDevices = true;
+        //     options.optionalServices = ['Battery_Service'];
+
+        //     document.getElementById("demo").innerHTML = 'Requesting Bluetooth Device...<br />';
+        //     document.getElementById("demo").innerHTML = 'with ' + JSON.stringify(options) + '<br />';
+        //     navigator.bluetooth.requestDevice(options)
+        //         .then(device => {
+        //             if (!device.gatt.connected) {
+        //                 document.getElementById("demo").innerHTML = "devo connettere<br />";
+        //                 return device.gatt.connect();
+        //             } else {
+        //                 document.getElementById("demo").innerHTML = "già connesso<br />";
+        //                 // Already connected.
+        //                 return Promise.resolve();
+        //             }
+        //         })
+        //         .then(device => {
+        //             document.getElementById("demo").innerHTML = '> Name:             ' + device.name + '<br />';
+        //             document.getElementById("demo").innerHTML = '> Id:               ' + device.id + '<br />';
+        //             document.getElementById("demo").innerHTML = '> Connected:        ' + device.gatt.connected + '<br />';
+        //         })
+        //         .catch(error => {
+        //             document.getElementById("demo").innerHTML = 'Argh! ' + error + '<br />';
+        //         });
+        // }
+
         function onButtonClick() {
-
-
-            let options = {};
-
-            options.acceptAllDevices = true;
-
-            document.getElementById("demo").innerHTML = 'Requesting Bluetooth Device...<br />';
-            document.getElementById("demo").innerHTML = 'with ' + JSON.stringify(options) + '<br />';
-            navigator.bluetooth.requestDevice(options)
+            log('Requesting Bluetooth Device...');
+            navigator.bluetooth.requestDevice(
+                { filters: [{ services: ['battery_service'] }] })
                 .then(device => {
-                    if (!device.gatt.connected) {
-                        document.getElementById("demo").innerHTML = "devo connettere<br />";
-                        return device.gatt.connect();
-                    } else {
-                        document.getElementById("demo").innerHTML = "già connesso<br />";
-                        // Already connected.
-                        return Promise.resolve();
-                    }
+                    log('Connecting to GATT Server...');
+                    return device.gatt.connect();
                 })
-                .then(device => {
-                    document.getElementById("demo").innerHTML = '> Name:             ' + device.name + '<br />';
-                    document.getElementById("demo").innerHTML = '> Id:               ' + device.id + '<br />';
-                    document.getElementById("demo").innerHTML = '> Connected:        ' + device.gatt.connected + '<br />';
+                .then(server => {
+                    log('Getting Battery Service...');
+                    return server.getPrimaryService('battery_service');
+                })
+                .then(service => {
+                    log('Getting Battery Level Characteristic...');
+                    return service.getCharacteristic('battery_level');
+                })
+                .then(characteristic => {
+                    log('Reading Battery Level...');
+                    return characteristic.readValue();
+                })
+                .then(value => {
+                    let batteryLevel = value.getUint8(0);
+                    log('> Battery Level is ' + batteryLevel + '%');
                 })
                 .catch(error => {
-                    document.getElementById("demo").innerHTML = 'Argh! ' + error + '<br />';
+                    log('Argh! ' + error);
                 });
         }
+
     </script>
     <title>prova</title>
     <link rel="manifest" href="images/manifest.json" />
@@ -57,7 +88,8 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <p id="demo"></P>
+            <p id="demo">
+            </P>
         </div>
     </div>
 
