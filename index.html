@@ -18,6 +18,12 @@
     <style type="text/css">
         .row {
             margin: 0 auto;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translate(0, -50%); /* IE 9 */
+            -webkit-transform: translate(0, -50%); /* Safari */
+            transform: translate(0, -50%);
         }
 
         a {
@@ -27,15 +33,6 @@
         html, body {
             height: 100%;
         }
-
-        .col-md-12 {
-            position: absolute;
-            top: 50%;
-            -ms-transform: translate(0, -50%); /* IE 9 */
-            -webkit-transform: translate(0, -50%); /* Safari */
-            transform: translate(0, -50%);
-        }
-
     </style>
 
 </head>
