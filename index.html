@@ -45,34 +45,109 @@
         //         });
         // }
 
-        function onButtonClick() {
-            document.getElementById("demo").innerHTML = 'Requesting Bluetooth Device...';
-            navigator.bluetooth.requestDevice(
-                { filters: [{ services: ['battery_service'] }] })
-                .then(device => {
-                    document.getElementById("demo").innerHTML = 'Connecting to GATT Server...';
-                    return device.gatt.connect();
-                })
-                .then(server => {
-                    document.getElementById("demo").innerHTML = 'Getting Battery Service...';
-                    return server.getPrimaryService('battery_service');
-                })
-                .then(service => {
-                    document.getElementById("demo").innerHTML = 'Getting Battery Level Characteristic...';
-                    return service.getCharacteristic('battery_level');
-                })
-                .then(characteristic => {
-                    document.getElementById("demo").innerHTML = 'Reading Battery Level...';
-                    return characteristic.readValue();
-                })
-                .then(value => {
-                    let batteryLevel = value.getUint8(0);
-                    document.getElementById("demo").innerHTML = '> Battery Level is ' + batteryLevel + '%';
-                })
-                .catch(error => {
-                    document.getElementById("demo").innerHTML = 'Argh! ' + error;
-                });
-        }
+        var bluetoothDevice;
+var batteryLevelCharacteristic;
+
+function onReadBatteryLevelButtonClick() {
+  return (bluetoothDevice ? Promise.resolve() : requestDevice())
+  .then(connectDeviceAndCacheCharacteristics)
+  .then(_ => {
+    document.getElementById("demo").innerHTML = 'Reading Battery Level...';
+    return batteryLevelCharacteristic.readValue();
+  })
+  .catch(error => {
+    document.getElementById("demo").innerHTML = 'Argh! ' + error;
+  });
+}
+
+function requestDevice() {
+  document.getElementById("demo").innerHTML = 'Requesting any Bluetooth Device...';
+  return navigator.bluetooth.requestDevice({
+   // filters: [...] <- Prefer filters to save energy & show relevant devices.
+      acceptAllDevices: true,
+      optionalServices: ['battery_service']})
+  .then(device => {
+    bluetoothDevice = device;
+    bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
+  });
+}
+
+function connectDeviceAndCacheCharacteristics() {
+  if (bluetoothDevice.gatt.connected && batteryLevelCharacteristic) {
+    return Promise.resolve();
+  }
+
+  document.getElementById("demo").innerHTML = 'Connecting to GATT Server...';
+  return bluetoothDevice.gatt.connect()
+  .then(server => {
+    document.getElementById("demo").innerHTML = 'Getting Battery Service...';
+    return server.getPrimaryService('battery_service');
+  })
+  .then(service => {
+    document.getElementById("demo").innerHTML = 'Getting Battery Level Characteristic...';
+    return service.getCharacteristic('battery_level');
+  })
+  .then(characteristic => {
+    batteryLevelCharacteristic = characteristic;
+    batteryLevelCharacteristic.addEventListener('characteristicvaluechanged',
+        handleBatteryLevelChanged);
+    document.querySelector('#startNotifications').disabled = false;
+    document.querySelector('#stopNotifications').disabled = true;
+  });
+}
+
+/* This function will be called when `readValue` resolves and
+ * characteristic value changes since `characteristicvaluechanged` event
+ * listener has been added. */
+function handleBatteryLevelChanged(event) {
+  let batteryLevel = event.target.value.getUint8(0);
+  document.getElementById("demo").innerHTML = '> Battery Level is ' + batteryLevel + '%';
+}
+
+function onStartNotificationsButtonClick() {
+  document.getElementById("demo").innerHTML = 'Starting Battery Level Notifications...';
+  batteryLevelCharacteristic.startNotifications()
+  .then(_ => {
+    document.getElementById("demo").innerHTML = '> Notifications started';
+    document.querySelector('#startNotifications').disabled = true;
+    document.querySelector('#stopNotifications').disabled = false;
+  })
+  .catch(error => {
+    document.getElementById("demo").innerHTML = 'Argh! ' + error;
+  });
+}
+
+function onStopNotificationsButtonClick() {
+  document.getElementById("demo").innerHTML = 'Stopping Battery Level Notifications...';
+  batteryLevelCharacteristic.stopNotifications()
+  .then(_ => {
+    document.getElementById("demo").innerHTML = '> Notifications stopped';
+    document.querySelector('#startNotifications').disabled = false;
+    document.querySelector('#stopNotifications').disabled = true;
+  })
+  .catch(error => {
+    document.getElementById("demo").innerHTML = 'Argh! ' + error;
+  });
+}
+
+function onResetButtonClick() {
+  if (batteryLevelCharacteristic) {
+    batteryLevelCharacteristic.removeEventListener('characteristicvaluechanged',
+        handleBatteryLevelChanged);
+    batteryLevelCharacteristic = null;
+  }
+  // Note that it doesn't disconnect device.
+  bluetoothDevice = null;
+  document.getElementById("demo").innerHTML = '> Bluetooth Device reset';
+}
+
+function onDisconnected() {
+  document.getElementById("demo").innerHTML = '> Bluetooth Device disconnected';
+  connectDeviceAndCacheCharacteristics()
+  .catch(error => {
+    document.getElementById("demo").innerHTML = 'Argh! ' + error;
+  });
+}
 
     </script>
     <title>prova</title>
