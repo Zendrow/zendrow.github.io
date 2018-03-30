@@ -1,149 +1,217 @@
 <html>
+
 <head>
-<title>QRCODE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style type="text/css">
-</style>
+    <link rel="manifest" href="images/manifest.json" />
+    <link rel="icon" href="images/PokeBall.png" />
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
 
-<script type="text/javascript" src="script/qrcode/grid.js"></script>
-<script type="text/javascript" src="script/qrcode/version.js"></script>
-<script type="text/javascript" src="script/qrcode/detector.js"></script>
-<script type="text/javascript" src="script/qrcode/formatinf.js"></script>
-<script type="text/javascript" src="script/qrcode/errorlevel.js"></script>
-<script type="text/javascript" src="script/qrcode/bitmat.js"></script>
-<script type="text/javascript" src="script/qrcode/datablock.js"></script>
-<script type="text/javascript" src="script/qrcode/bmparser.js"></script>
-<script type="text/javascript" src="script/qrcode/datamask.js"></script>
-<script type="text/javascript" src="script/qrcode/rsdecoder.js"></script>
-<script type="text/javascript" src="script/qrcode/gf256poly.js"></script>
-<script type="text/javascript" src="script/qrcode/gf256.js"></script>
-<script type="text/javascript" src="script/qrcode/decoder.js"></script>
-<script type="text/javascript" src="script/qrcode/qrcode.js"></script>
-<script type="text/javascript" src="script/qrcode/findpat.js"></script>
-<script type="text/javascript" src="script/qrcode/alignpat.js"></script>
-<script type="text/javascript" src="script/qrcode/databr.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 
-<script type="text/javascript">
-var gCtx = null;
-	var gCanvas = null;
-
-	var imageData = null;
-	var ii=0;
-	var jj=0;
-	var c=0;
-	
-	
-function dragenter(e) {
-  e.stopPropagation();
-  e.preventDefault();
-}
-
-function dragover(e) {
-  e.stopPropagation();
-  e.preventDefault();
-}
-function drop(e) {
-  e.stopPropagation();
-  e.preventDefault();
-
-  var dt = e.dataTransfer;
-  var files = dt.files;
-
-  handleFiles(files);
-}
-
-function handleFiles(f)
-{
-	var o=[];
-	for(var i =0;i<f.length;i++)
-	{
-	  var reader = new FileReader();
-
-      reader.onload = (function(theFile) {
-        return function(e) {
-          qrcode.decode(e.target.result);
-        };
-      })(f[i]);
-
-      // Read in the image file as a data URL.
-      reader.readAsDataURL(f[i]);	}
-}
-	
-function read(a)
-{
-	alert(a);
-}	
-	
-function load()
-{
-	initCanvas(640,480);
-	qrcode.callback = read;
-	qrcode.decode("meqrthumb.png");
-}
-
-function initCanvas(ww,hh)
-	{
-		gCanvas = document.getElementById("qr-canvas");
-		gCanvas.addEventListener("dragenter", dragenter, false);  
-		gCanvas.addEventListener("dragover", dragover, false);  
-		gCanvas.addEventListener("drop", drop, false);
-		var w = ww;
-		var h = hh;
-		gCanvas.style.width = w + "px";
-		gCanvas.style.height = h + "px";
-		gCanvas.width = w;
-		gCanvas.height = h;
-		gCtx = gCanvas.getContext("2d");
-		gCtx.clearRect(0, 0, w, h);
-		imageData = gCtx.getImageData( 0,0,320,240);
-	}
-
-	function passLine(stringPixels) { 
-		//a = (intVal >> 24) & 0xff;
-
-		var coll = stringPixels.split("-");
-	
-		for(var i=0;i<320;i++) { 
-			var intVal = parseInt(coll[i]);
-			r = (intVal >> 16) & 0xff;
-			g = (intVal >> 8) & 0xff;
-			b = (intVal ) & 0xff;
-			imageData.data[c+0]=r;
-			imageData.data[c+1]=g;
-			imageData.data[c+2]=b;
-			imageData.data[c+3]=255;
-			c+=4;
-		} 
-
-		if(c>=320*240*4) { 
-			c=0;
-      			gCtx.putImageData(imageData, 0,0);
-		} 
- 	} 
-
-        function captureToCanvas() {
-		flash = document.getElementById("embedflash");
-		flash.ccCapture();
-		qrcode.decode();
+    <style type="text/css">
+        .row {
+            margin: 0 auto;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            -ms-transform: translate(0, -50%);
+            /* IE 9 */
+            -webkit-transform: translate(0, -50%);
+            /* Safari */
+            transform: translate(0, -50%);
         }
-</script>
+
+        a {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+
+    <style type="text/css">
+        body {
+            width: 100%;
+            text-align: center;
+        }
+
+        img {
+            border: 0;
+        }
+
+        #main {
+            margin: 15px auto;
+            background: white;
+            overflow: auto;
+            width: 100%;
+        }
+
+        #header {
+            background: white;
+            margin-bottom: 15px;
+        }
+
+        #mainbody {
+            background: white;
+            width: 100%;
+            display: none;
+        }
+
+        #footer {
+            background: white;
+        }
+
+        #v {
+            width: 320px;
+            height: 240px;
+        }
+
+        #qr-canvas {
+            display: none;
+        }
+
+        #qrfile {
+            width: 320px;
+            height: 240px;
+        }
+
+        #mp1 {
+            text-align: center;
+            font-size: 35px;
+        }
+
+        #imghelp {
+            position: relative;
+            left: 0px;
+            top: -160px;
+            z-index: 100;
+            font: 18px arial, sans-serif;
+            background: #f0f0f0;
+            margin-left: 35px;
+            margin-right: 35px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-radius: 20px;
+        }
+
+        .selector {
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+            margin-bottom: -5px;
+        }
+
+        #outdiv {
+            width: 320px;
+            height: 240px;
+            border: solid;
+            border-width: 3px 3px 3px 3px;
+        }
+
+        #result {
+            border: solid;
+            border-width: 1px 1px 1px 1px;
+            padding: 20px;
+            width: 70%;
+        }
+
+        ul {
+            margin-bottom: 0;
+            margin-right: 40px;
+        }
+
+        li {
+            display: inline;
+            padding-right: 0.5em;
+            padding-left: 0.5em;
+            font-weight: bold;
+            border-right: 1px solid #333333;
+        }
+
+        li a {
+            text-decoration: none;
+            color: black;
+        }
+
+        #footer a {
+            color: black;
+        }
+
+        .tsel {
+            padding: 0;
+        }
+    </style>
+
+    <script type="text/javascript" src="script/qrScan/llqrcode.js"></script>
+    <script type="text/javascript" src="script/qrScan/webqr.js"></script>
 
 </head>
 
-<body onload="load()">
-    <div class="container">
-	
-  	<object  id="iembedflash" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="320" height="240">
-  		<param name="movie" value="camcanvas.swf" />
-  		<param name="quality" value="high" />
-		<param name="allowScriptAccess" value="always" />
-  		<embed  allowScriptAccess="always"  id="embedflash" src="camcanvas.swf" quality="high" width="320" height="240" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" mayscript="true"  />
-    </object>
-	
+<body>
+    <div class="row">
+        <div id="main">
+            <div id="header">
+                
+                <p id="mp1">
+                    QR Code scanner
+                </p>
+            </div>
+            <div id="mainbody">
+                <table class="tsel" border="0" width="100%">
+                    <tr>
+                        <td valign="top" align="center" width="50%">
+                            <table class="tsel" border="0">
+                                <tr>
+                                    <td>
+                                        <img class="selector" id="webcamimg" src="images/qr.png" onclick="setwebcam()" align="left" />
+                                    </td>
+                                    <td>
+                                        <img class="selector" id="qrimg" src="images/addImage.png" onclick="setimg()" align="right" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="center">
+                                        <div id="outdiv">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="center">
+                            <img src="down.png" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="center">
+                            <div id="result"></div>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>&nbsp;
+
+        </div>
+        <canvas id="qr-canvas" width="800" height="600"></canvas>
+        <script type="text/javascript">load();</script>
     </div>
-<button onclick="captureToCanvas()">Capture</button><br>
-<canvas id="qr-canvas" width="640" height="480"></canvas>
+
+    <div class="row" style="position: absolute; top:5%;">
+        <div class="col-md-12">
+            <a href="index.html" class="btn btn-success">Back</a>
+        </div>
+    </div>
 </body>
 
 </html>
