@@ -16,7 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.1/processing-api.min.js"></script>
+    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.1/processing-api.min.js"></script> -->
 
     <style type="text/css">
         .row {
@@ -68,36 +68,39 @@
                         fileReader = new FileReader();
                         fileReader.onload = function (ev) {
                             console.log(ev);
-                            pdfjsLib.getDocument(fileReader.result).then(function getPdfHelloWorld(pdf) {
-                                //
-                                // Fetch the first page
-                                //
-                                console.log(pdf)
-                                pdf.getPage(1).then(function getPageHelloWorld(page) {
-                                    var scale = 1.5;
-                                    var viewport = page.getViewport(scale);
+                            pdfjsLib.getDocument(fileReader.result).then(
+                                function getPdfHelloWorld(pdf) {
                                     //
-                                    // Prepare canvas using PDF page dimensions
+                                    // Fetch the first page
                                     //
-                                    var canvas = document.getElementById('the-canvas');
-                                    var context = canvas.getContext('2d');
-                                    
-                                    
-                                    canvas.height = viewport.height;
-                                    //canvas.height = window.height;
-                                    canvas.width = viewport.width;
-                                    //canvas.height = window.height;
-                                    //
-                                    // Render PDF page into canvas context
-                                    //
-                                    var task = page.render({ canvasContext: context, viewport: viewport })
-                                      task.promise.then(function(){
-                                        console.log(canvas.toDataURL('image/jpeg'));
-                                      });
+                                    console.log(pdf)
+                                    pdf.getPage(1).then(
+                                        function getPageHelloWorld(page) {
+                                            var scale = 1.5;
+                                            var viewport = page.getViewport(scale);
+                                            //
+                                            // Prepare canvas using PDF page dimensions
+                                            //
+                                            var canvas = document.getElementById('the-canvas');
+                                            var context = canvas.getContext('2d');
+
+
+                                            canvas.height = viewport.height;
+                                            //canvas.height = window.height;
+                                            canvas.width = viewport.width;
+                                            //canvas.height = window.height;
+                                            //
+                                            // Render PDF page into canvas context
+                                            //
+                                            var task = page.render({ canvasContext: context, viewport: viewport })
+                                            task.promise.then(
+                                                function () {
+                                                    console.log(canvas.toDataURL('image/jpeg'));
+                                                });
+                                        });
+                                }, function (error) {
+                                    console.log(error);
                                 });
-                            }, function (error) {
-                                console.log(error);
-                            });
                         };
                         fileReader.readAsArrayBuffer(file);
                     }
