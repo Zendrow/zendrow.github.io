@@ -46,6 +46,20 @@
                 console.error(err.message);
             });
            
+
+           var getPositionConstantly = function (options) {
+            return new Promise(function (resolve, reject) {
+                navigator.geolocation.watchPosition(resolve, reject, options);
+            });
+        }
+
+        getPositionConstantly().then((position) => {
+                console.log(position);
+            })
+            .catch((err) => {
+                console.error(err.message);
+            });
+           
     </script>
     <title>prova</title>
     <link rel="manifest" href="images/manifest.json" />
@@ -55,7 +69,8 @@
 <body>
     <div class="row">
         <div class="col-md-12">
-            <a onclick="getPosition()" class="btn btn-success">Back</a>
+            <a onclick="getPosition()" class="btn btn-success">Get Position</a>
+            <a onclick="getPositionConstantly()" class="btn btn-success">Get Position Constantly</a>
         </div>
     </div>
 
