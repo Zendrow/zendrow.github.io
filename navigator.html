@@ -34,6 +34,7 @@
 
     <script>
         var getPosition = function (options) {
+            navigator.geolocation.getCurrentPosition(function () {}, function () {}, {});
             return new Promise(function (resolve, reject) {
                 navigator.geolocation.getCurrentPosition(resolve, reject, options);
             });
@@ -47,18 +48,18 @@
             });
            
 
-           var getPositionConstantly = function (options) {
-            return new Promise(function (resolve, reject) {
-                navigator.geolocation.watchPosition(resolve, reject, options);
-            });
-        }
+        //    var getPositionConstantly = function (options) {
+        //     return new Promise(function (resolve, reject) {
+        //         navigator.geolocation.watchPosition(resolve, reject, options);
+        //     });
+        // }
 
-        getPositionConstantly().then((position) => {
-                console.log(position);
-            })
-            .catch((err) => {
-                console.error(err.message);
-            });
+        // getPositionConstantly().then((position) => {
+        //         console.log(position);
+        //     })
+        //     .catch((err) => {
+        //         console.error(err.message);
+        //     });
            
     </script>
     <title>prova</title>
@@ -69,10 +70,23 @@
 <body>
     <div class="row">
         <div class="col-md-12">
-            <a onclick="getPosition()" class="btn btn-success">Get Position</a>
-            <a onclick="getPositionConstantly()" class="btn btn-success">Get Position Constantly</a>
+            <!-- <a onclick="getPosition()" class="btn btn-success">Get Position</a> -->
+            <!-- <a onclick="getPositionConstantly()" class="btn btn-success">Get Position Constantly</a> -->
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Get Position:</p>
+            <p id="getPos"></p>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <p>Get Position Constantly:</p>
+            <p id="getPosConst"></p>
+        </div>        
+    </div> -->
 
     <div class="row" style="position: absolute; bottom: 5%;">
         <div class="col-md-12">
