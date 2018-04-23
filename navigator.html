@@ -42,7 +42,10 @@
 
         getPosition().then((position) => {
                 console.log(position);
-                document.getElementById("getPos").innerHTML = position;
+
+                var mio = "lat: " + position.coords.latitude  + " long: "+ position.coords.longitude;
+
+                document.getElementById("getPos").innerHTML = mio;
             })
             .catch((err) => {
                 console.error(err.message);
