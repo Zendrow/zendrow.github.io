@@ -42,6 +42,7 @@
 
         getPosition().then((position) => {
                 console.log(position);
+                document.getElementById("getPos").innerHTML = position;
             })
             .catch((err) => {
                 console.error(err.message);
