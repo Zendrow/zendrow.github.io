@@ -3,5 +3,11 @@
     "short_name": "Zen",
     "display": "standalone",
     "background_color": "red",
-    "description": "A simply readable Hacker News app."
+    "description": "A simply readable Hacker News app.",
+    "file_extension_associations": {
+        "tjf": {
+            "name": "My document format",
+            "url": "www.google.it"
+        }
+    }
 }
