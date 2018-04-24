@@ -46,6 +46,12 @@
             
         }
 
+        function stopWatch(watchID){
+            navigator.geolocation.clearWatch(watchID);
+
+            document.getElementById("getCurr").innerHTML += "Termine watchposition<br>"
+        }
+
     </script>
 </head>
 <body>
@@ -53,8 +59,9 @@
     <br /><br />
     <p id="idcs"></p>
 
-    <div class="row" style="position: absolute; bottom: 5%;">
+    <div class="row" style="position: absolute; bottom: 7%;">
         <div class="col-md-12">
+            <a class="btn btn-success" onclick="stopWatch(watchID)">Ferma watchPosition</a>
             <a href="index.html" class="btn btn-success">Back</a>
         </div>
     </div>
