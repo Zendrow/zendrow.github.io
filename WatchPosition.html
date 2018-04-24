@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="manifest" href="images/manifest.json" />
+    <link rel="icon" href="images/PokeBall.png" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <style type="text/css">
+        .row {
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        a {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+        
+    <script type="text/javascript">
+        var loc = "";
+
+        if(navigator.geolocation){
+            var watchID = navigator.geolocation.watchPosition(function(position) {
+                if(position){
+                    loc += "lat: " + position.coords.latitude + " long: " + position.coords.longitude + "<br />";
+                    document.getElementById("getCurr").innerHTML = loc;
+                }
+                
+            });
+
+            
+        }
+
+    </script>
+</head>
+<body>
+    <p id="getCurr"></p>
+    <br /><br />
+    <p id="idcs"></p>
+
+    <div class="row" style="position: absolute; bottom: 5%;">
+        <div class="col-md-12">
+            <a href="index.html" class="btn btn-success">Back</a>
+        </div>
+    </div>
+</body>
+</html>
