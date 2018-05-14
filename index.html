@@ -1,59 +1,149 @@
-<!DOCTYPE html>
-
-<!--
-
- *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
-
- *
-
- *  Use of this source code is governed by a BSD-style license
-
- *  that can be found in the LICENSE file in the root of the source
-
- *  tree.
-
--->
-
 <html>
 
 <head>
-	
-  <meta charset="utf-8">
-  <meta name="description" content="WebRTC code samples">
-  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
-  <meta itemprop="description" content="Client-side WebRTC code samples">
-  <meta itemprop="image" content="images/webrtc-icon-192x192.png">
-  <meta itemprop="name" content="WebRTC code samples">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta id="theme-color" name="theme-color" content="#ffffff">
-  <base target="_blank">
+  <title>QRCODE</title>
 
-  <title>getUserMedia to canvas</title>
+  <style type="text/css">
+  </style>
 
-  <link rel="icon" sizes="192x192" href="images/webrtc-icon-192x192.png">
-  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="css/main.css">
-  
+
+  <script type="text/javascript" src="script/grid.js"></script>
+  <script type="text/javascript" src="script/version.js"></script>
+  <script type="text/javascript" src="script/detector.js"></script>
+  <script type="text/javascript" src="script/formatinf.js"></script>
+  <script type="text/javascript" src="script/errorlevel.js"></script>
+  <script type="text/javascript" src="script/bitmat.js"></script>
+  <script type="text/javascript" src="script/datablock.js"></script>
+  <script type="text/javascript" src="script/bmparser.js"></script>
+  <script type="text/javascript" src="script/datamask.js"></script>
+  <script type="text/javascript" src="script/rsdecoder.js"></script>
+  <script type="text/javascript" src="script/gf256poly.js"></script>
+  <script type="text/javascript" src="script/gf256.js"></script>
+  <script type="text/javascript" src="script/decoder.js"></script>
+  <script type="text/javascript" src="script/qrcode.js"></script>
+  <script type="text/javascript" src="script/findpat.js"></script>
+  <script type="text/javascript" src="script/alignpat.js"></script>
+  <script type="text/javascript" src="script/databr.js"></script>
+
+  <script type="text/javascript">
+    var gCtx = null;
+    var gCanvas = null;
+
+    var imageData = null;
+    var ii = 0;
+    var jj = 0;
+    var c = 0;
+
+
+    function dragenter(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    function dragover(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+    function drop(e) {
+      e.stopPropagation();
+      e.preventDefault();
+
+      var dt = e.dataTransfer;
+      var files = dt.files;
+
+      handleFiles(files);
+    }
+
+    function handleFiles(f) {
+      var o = [];
+      for (var i = 0; i < f.length; i++) {
+        var reader = new FileReader();
+
+        reader.onload = (function (theFile) {
+          return function (e) {
+            qrcode.decode(e.target.result);
+          };
+        })(f[i]);
+
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(f[i]);
+      }
+    }
+
+    function read(a) {
+      alert(a);
+    }
+
+    function load() {
+      initCanvas(640, 480);
+      qrcode.callback = read;
+      qrcode.decode("meqrthumb.png");
+    }
+
+    function initCanvas(ww, hh) {
+      gCanvas = document.getElementById("qr-canvas");
+      gCanvas.addEventListener("dragenter", dragenter, false);
+      gCanvas.addEventListener("dragover", dragover, false);
+      gCanvas.addEventListener("drop", drop, false);
+      var w = ww;
+      var h = hh;
+      gCanvas.style.width = w + "px";
+      gCanvas.style.height = h + "px";
+      gCanvas.width = w;
+      gCanvas.height = h;
+      gCtx = gCanvas.getContext("2d");
+      gCtx.clearRect(0, 0, w, h);
+      imageData = gCtx.getImageData(0, 0, 320, 240);
+    }
+
+    function passLine(stringPixels) {
+      //a = (intVal >> 24) & 0xff;
+
+      var coll = stringPixels.split("-");
+
+      for (var i = 0; i < 320; i++) {
+        var intVal = parseInt(coll[i]);
+        r = (intVal >> 16) & 0xff;
+        g = (intVal >> 8) & 0xff;
+        b = (intVal) & 0xff;
+        imageData.data[c + 0] = r;
+        imageData.data[c + 1] = g;
+        imageData.data[c + 2] = b;
+        imageData.data[c + 3] = 255;
+        c += 4;
+      }
+
+      if (c >= 320 * 240 * 4) {
+        c = 0;
+        gCtx.putImageData(imageData, 0, 0);
+      }
+    }
+
+    function captureToCanvas() {
+      flash = document.getElementById("embedflash");
+      flash.ccCapture();
+      qrcode.decode();
+    }
+  </script>
+
 </head>
 
-<body>
+<body onload="load()">
+  <div class="container">
 
-  <div id="container">
-    <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a> <span>getUserMedia ? canvas</span></h1>
-    <video autoplay></video>
-    <button>Take snapshot</button>
-    <canvas></canvas>
-    <p>Draw a frame from the video onto the canvas element using the <code>drawImage()</code> method.</p>
-    <p>The variables <code>canvas</code>, <code>video</code> and <code>stream</code> are in global scope, so you can inspect them from the console.</p>
-    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/canvas" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
+    <object id="iembedflash" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0"
+      width="320" height="240">
+      <param name="movie" value="camcanvas.swf" />
+      <param name="quality" value="high" />
+      <param name="allowScriptAccess" value="always" />
+      <embed allowScriptAccess="always" id="embedflash" src="script/camcanvas.swf" quality="high" width="320" height="240" type="application/x-shockwave-flash"
+        pluginspage="http://www.macromedia.com/go/getflashplayer" mayscript="true" />
+    </object>
+
   </div>
-
-  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/main.js"></script>
-
-
-
+  <button onclick="captureToCanvas()">Capture</button>
+  <br>
+  <canvas id="qr-canvas" width="640" height="480"></canvas>
 </body>
 
 </html>
