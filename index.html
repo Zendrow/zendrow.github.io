@@ -1,151 +1,215 @@
 <html>
 
 <head>
-  <title>QRCODE</title>
+    <meta name="description" content="QR Code scanner" />
+    <meta name="keywords" content="qrcode,qr code,scanner,barcode,javascript" />
+    <meta name="language" content="English" />
+    <meta name="copyright" content="Lazar Laszlo (c) 2011" />
+    <meta name="Revisit-After" content="1 Days" />
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web QR</title>
 
-  <style type="text/css">
-  </style>
+    <style type="text/css">
+        body {
+            width: 100%;
+            text-align: center;
+        }
 
+        img {
+            border: 0;
+        }
 
-  <script type="text/javascript" src="script/grid.js"></script>
-  <script type="text/javascript" src="script/version.js"></script>
-  <script type="text/javascript" src="script/detector.js"></script>
-  <script type="text/javascript" src="script/formatinf.js"></script>
-  <script type="text/javascript" src="script/errorlevel.js"></script>
-  <script type="text/javascript" src="script/bitmat.js"></script>
-  <script type="text/javascript" src="script/datablock.js"></script>
-  <script type="text/javascript" src="script/bmparser.js"></script>
-  <script type="text/javascript" src="script/datamask.js"></script>
-  <script type="text/javascript" src="script/rsdecoder.js"></script>
-  <script type="text/javascript" src="script/gf256poly.js"></script>
-  <script type="text/javascript" src="script/gf256.js"></script>
-  <script type="text/javascript" src="script/decoder.js"></script>
-  <script type="text/javascript" src="script/qrcode.js"></script>
-  <script type="text/javascript" src="script/findpat.js"></script>
-  <script type="text/javascript" src="script/alignpat.js"></script>
-  <script type="text/javascript" src="script/databr.js"></script>
+        #main {
+            margin: 15px auto;
+            background: white;
+            overflow: auto;
+            width: 100%;
+        }
 
-  <script type="text/javascript">
-    var gCtx = null;
-    var gCanvas = null;
+        #header {
+            background: white;
+            margin-bottom: 15px;
+        }
 
-    var imageData = null;
-    var ii = 0;
-    var jj = 0;
-    var c = 0;
+        #mainbody {
+            background: white;
+            width: 100%;
+            display: none;
+        }
 
+        #footer {
+            background: white;
+        }
 
-    function dragenter(e) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
+        #v {
+            width: 320px;
+            height: 240px;
+        }
 
-    function dragover(e) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-    function drop(e) {
-      e.stopPropagation();
-      e.preventDefault();
+        #qr-canvas {
+            display: none;
+        }
 
-      var dt = e.dataTransfer;
-      var files = dt.files;
+        #qrfile {
+            width: 320px;
+            height: 240px;
+        }
 
-      handleFiles(files);
-    }
+        #mp1 {
+            text-align: center;
+            font-size: 35px;
+        }
 
-    function handleFiles(f) {
-      var o = [];
-      for (var i = 0; i < f.length; i++) {
-        var reader = new FileReader();
+        #imghelp {
+            position: relative;
+            left: 0px;
+            top: -160px;
+            z-index: 100;
+            font: 18px arial, sans-serif;
+            background: #f0f0f0;
+            margin-left: 35px;
+            margin-right: 35px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-radius: 20px;
+        }
 
-        reader.onload = (function (theFile) {
-          return function (e) {
-            qrcode.decode(e.target.result);
-          };
-        })(f[i]);
+        .selector {
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+            margin-bottom: -5px;
+        }
 
-        // Read in the image file as a data URL.
-        reader.readAsDataURL(f[i]);
-      }
-    }
+        #outdiv {
+            width: 320px;
+            height: 240px;
+            border: solid;
+            border-width: 3px 3px 3px 3px;
+        }
 
-    function read(a) {
-      alert(a);
-    }
+        #result {
+            border: solid;
+            border-width: 1px 1px 1px 1px;
+            padding: 20px;
+            width: 70%;
+        }
 
-    function load() {
-      initCanvas(640, 480);
-      qrcode.callback = read;
-      qrcode.decode("meqrthumb.png");
-    }
+        ul {
+            margin-bottom: 0;
+            margin-right: 40px;
+        }
 
-    function initCanvas(ww, hh) {
-      gCanvas = document.getElementById("qr-canvas");
-      gCanvas.addEventListener("dragenter", dragenter, false);
-      gCanvas.addEventListener("dragover", dragover, false);
-      gCanvas.addEventListener("drop", drop, false);
-      var w = ww;
-      var h = hh;
-      gCanvas.style.width = w + "px";
-      gCanvas.style.height = h + "px";
-      gCanvas.width = w;
-      gCanvas.height = h;
-      gCtx = gCanvas.getContext("2d");
-      gCtx.clearRect(0, 0, w, h);
-      imageData = gCtx.getImageData(0, 0, 320, 240);
-    }
+        li {
+            display: inline;
+            padding-right: 0.5em;
+            padding-left: 0.5em;
+            font-weight: bold;
+            border-right: 1px solid #333333;
+        }
 
-    function passLine(stringPixels) {
-      //a = (intVal >> 24) & 0xff;
+        li a {
+            text-decoration: none;
+            color: black;
+        }
 
-      var coll = stringPixels.split("-");
+        #footer a {
+            color: black;
+        }
 
-      for (var i = 0; i < 320; i++) {
-        var intVal = parseInt(coll[i]);
-        r = (intVal >> 16) & 0xff;
-        g = (intVal >> 8) & 0xff;
-        b = (intVal) & 0xff;
-        imageData.data[c + 0] = r;
-        imageData.data[c + 1] = g;
-        imageData.data[c + 2] = b;
-        imageData.data[c + 3] = 255;
-        c += 4;
-      }
+        .tsel {
+            padding: 0;
+        }
+    </style>
 
-      if (c >= 320 * 240 * 4) {
-        c = 0;
-        gCtx.putImageData(imageData, 0, 0);
-      }
-    }
+    <script type="text/javascript" src="script/llqrcode.js"></script>    
+    <script type="text/javascript" src="webqr.js"></script>
 
-    function captureToCanvas() {
-      flash = document.getElementById("embedflash");
-      flash.ccCapture();
-      qrcode.decode();
-    }
-  </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-24451557-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
 
 </head>
 
-<body onload="load()">
-  <div class="container">
-    <video id="embedflash">
-      
-    </video>
-    <!-- <object id="iembedflash" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0"
-      width="320" height="240">
-      <param name="movie" value="camcanvas.swf" />
-      <param name="quality" value="high" />
-      <param name="allowScriptAccess" value="always" />
-      <embed allowScriptAccess="always" id="embedflash" src="script/camcanvas.swf" quality="high" width="320" height="240" type="application/x-shockwave-flash"
-        pluginspage="http://www.macromedia.com/go/getflashplayer" mayscript="true" />
-    </object> -->
-
-  </div>
-  <button onclick="captureToCanvas()">Capture</button>
-  <br>
-  <canvas id="qr-canvas" width="640" height="480"></canvas>
+<body>
+    <div id="main">
+        <div id="header">
+            
+            <p id="mp1">
+                QR Code scanner
+            </p>
+            <ul>
+                <li>
+                    <a href="index.html">Scan</a>
+                </li>
+                <li>
+                    <a href="create.html">Create</a>
+                </li>
+                <li>
+                    <a href="about.html">About</a>
+                </li>
+                <li style="border: medium none;">
+                    <a href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <div id="mainbody">
+            <table class="tsel" border="0" width="100%">
+                <tr>
+                    <td valign="top" align="center" width="50%">
+                        <table class="tsel" border="0">
+                            <tr>
+                                <td>
+                                    <img class="selector" id="webcamimg" src="vid.png" onclick="setwebcam()" align="left" />
+                                </td>
+                                <td>
+                                    <img class="selector" id="qrimg" src="cam.png" onclick="setimg()" align="right" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <div id="outdiv">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="center">
+                        <img src="down.png" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="center">
+                        <div id="result"></div>
+                    </td>
+                </tr>
+            </table>            
+            <!-- webqr_2016 -->
+            
+        </div>&nbsp;
+        <div id="footer">
+            <img style="position:relative;top:0px;left:0px;margin:0;padding:0;" src="comodo_secure_seal_100x85_transp.png" />
+            <h5 align="center">Copyright &copy; 2011
+                <a target="_blank" href="http://www.lazarsoft.info">Lazar Laszlo</a>
+            </h5>
+        </div>
+    </div>
+    <canvas id="qr-canvas" width="800" height="600"></canvas>
+    <script type="text/javascript">load();</script>
 </body>
 
 </html>
