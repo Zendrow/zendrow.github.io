@@ -144,7 +144,14 @@
                 <tr>
                     <td valign="top" align="center" width="50%">
                         <table class="tsel" border="0">
-                            
+                            <tr>
+                                <td>
+                                    <img class="selector" id="webcamimg" src="vid.png" onclick="setwebcam()" align="left" />
+                                </td>
+                                <td>
+                                    <img class="selector" id="qrimg" src="cam.png" onclick="setimg()" align="right" />
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="2" align="center">
                                     <div id="outdiv">
@@ -154,7 +161,11 @@
                         </table>
                     </td>
                 </tr>
-               
+                <tr>
+                    <td colspan="3" align="center">
+                        <img src="down.png" />
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="3" align="center">
                         <div id="result"></div>
@@ -163,8 +174,9 @@
             </table>            
             <!-- webqr_2016 -->
             
-        </div>
+        </div>&nbsp;
         <div id="footer">
+            <img style="position:relative;top:0px;left:0px;margin:0;padding:0;" src="comodo_secure_seal_100x85_transp.png" />
             <h5 align="center">Copyright &copy; 2011
                 <a target="_blank" href="http://www.lazarsoft.info">Lazar Laszlo</a>
             </h5>
