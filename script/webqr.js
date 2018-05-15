@@ -151,7 +151,7 @@ function load()
 function setwebcam()
 {
 	
-	var options = true;
+	var options = ' { facingMode: { exact: "environment" } } ';
 	if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices)
 	{
 		try{
