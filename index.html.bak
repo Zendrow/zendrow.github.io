@@ -14,7 +14,7 @@
   <div class="container">
     <label class="switch">
       <input type="checkbox" class="switch-input">
-      <span class="switch-label" data-on="XX" data-off="No"></span>
+      <span class="switch-label" data-on="Sì" data-off="No"></span>
       <span class="switch-handle"></span>
     </label>
 
