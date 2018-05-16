@@ -38,6 +38,12 @@ input[type="checkbox"]{
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   padding: 0;
+  
+}
+
+input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
 }
 
 .switch-input {
@@ -45,6 +51,7 @@ input[type="checkbox"]{
   top: 0;
   left: 0;
   opacity: 0;
+  
 }
 
 .switch-label {
