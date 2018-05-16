@@ -1,190 +1,59 @@
+<!DOCTYPE html>
+
+<!--
+
+ *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+
+ *
+
+ *  Use of this source code is governed by a BSD-style license
+
+ *  that can be found in the LICENSE file in the root of the source
+
+ *  tree.
+
+-->
+
 <html>
 
 <head>
-    <meta name="description" content="QR Code scanner" />
-    <meta name="keywords" content="qrcode,qr code,scanner,barcode,javascript" />
-    <meta name="language" content="English" />
-    <meta name="copyright" content="Lazar Laszlo (c) 2011" />
-    <meta name="Revisit-After" content="1 Days" />
-    <meta name="robots" content="index, follow" />
-    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Web QR</title>
+	
+  <meta charset="utf-8">
+  <meta name="description" content="WebRTC code samples">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+  <meta itemprop="description" content="Client-side WebRTC code samples">
+  <meta itemprop="image" content="images/webrtc-icon-192x192.png">
+  <meta itemprop="name" content="WebRTC code samples">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta id="theme-color" name="theme-color" content="#ffffff">
+  <base target="_blank">
 
-    <link rel="manifest" href="/manifest.json">
+  <title>getUserMedia to canvas</title>
 
-    <style type="text/css">
-        body {
-            width: 100%;
-            text-align: center;
-        }
-
-        img {
-            border: 0;
-        }
-
-        #main {
-            margin: 15px auto;
-            background: white;
-            overflow: auto;
-            width: 100%;
-        }
-
-        #header {
-            background: white;
-            margin-bottom: 15px;
-        }
-
-        #mainbody {
-            background: white;
-            /*width: 100%;*/ 
-            display: inline;
-        }
-
-        #footer {
-            background: white;
-        }
-
-        #v {
-            width: 100%;
-            height: 100%;
-        }
-
-        #qr-canvas {
-            display: none;
-        }
-
-        #qrfile {
-            width: 320px;
-            height: 240px;
-        }
-
-        #mp1 {
-            text-align: center;
-            font-size: 35px;
-        }
-
-        #imghelp {
-            position: relative;
-            left: 0px;
-            top: -160px;
-            z-index: 100;
-            font: 18px arial, sans-serif;
-            background: #f0f0f0;
-            margin-left: 35px;
-            margin-right: 35px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            border-radius: 20px;
-        }
-
-        .selector {
-            margin: 0;
-            padding: 0;
-            cursor: pointer;
-            margin-bottom: -5px;
-        }
-
-        #outdiv {
-            width: 100%;
-            height: 90%;
-            border: solid;
-            border-width: 3px 3px 3px 3px;
-        }
-
-        #result {
-            border: solid;
-            border-width: 1px 1px 1px 1px;
-            padding: 20px;
-            width: 70%;
-        }
-
-        ul {
-            margin-bottom: 0;
-            margin-right: 40px;
-        }
-
-        li {
-            display: inline;
-            padding-right: 0.5em;
-            padding-left: 0.5em;
-            font-weight: bold;
-            border-right: 1px solid #333333;
-        }
-
-        li a {
-            text-decoration: none;
-            color: black;
-        }
-
-        #footer a {
-            color: black;
-        }
-
-        .tsel {
-            padding: 0;
-        }
-    </style>
-
-    <script type="text/javascript" src="script/llqrcode.js"></script>    
-    <script type="text/javascript" src="script/webqr.js"></script>
-
-    
+  <link rel="icon" sizes="192x192" href="images/webrtc-icon-192x192.png">
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/main.css">
+  
 </head>
 
 <body>
-    <div id="main">
-        <div id="header">
-            
-            <p id="mp1">
-                QR Code scanner
-            </p>
-            
-        </div>
-        <div id="mainbody" >
-            <!-- <table class="tsel" border="0" width="100%">
-                <tr>
-                    <td valign="top" align="center" width="50%">
-                        <table class="tsel" border="0"> -->
-                            <!-- <tr>
-                                <td>
-                                    <img class="selector" id="webcamimg" src="vid.png" onclick="setwebcam()" align="left" />
-                                </td>
-                                <td>
-                                    <img class="selector" id="qrimg" src="cam.png" onclick="setimg()" align="right" />
-                                </td>
-                            </tr> -->
-                            <!-- <tr>
-                                <td colspan="3" align="center"> -->
-                                    <div id="outdiv"></div>
-                                    <!-- </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr> -->
-                <!-- <tr>
-                    <td colspan="3" align="center">
-                        <img src="down.png" />
-                    </td>
-                </tr> -->
-                <!-- <tr>
-                    <td colspan="3" align="center"> -->
-                        <div id="result"></div>
-                    <!-- </td>
-                </tr>
-            </table>             -->
-            <!-- webqr_2016 -->
-            
-        </div>&nbsp;
-        <div id="footer">            
-            <h5 align="center">Copyright &copy; 2011
-                <a target="_blank" href="http://www.lazarsoft.info">Lazar Laszlo</a>
-            </h5>
-        </div>
-    </div>
-    <canvas id="qr-canvas" width="800" height="600"></canvas>
-    <script type="text/javascript">load();</script>
+
+  <div id="container">
+    <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a> <span>getUserMedia ? canvas</span></h1>
+    <video autoplay></video>
+    <button>Take snapshot</button>
+    <canvas></canvas>
+    <p>Draw a frame from the video onto the canvas element using the <code>drawImage()</code> method.</p>
+    <p>The variables <code>canvas</code>, <code>video</code> and <code>stream</code> are in global scope, so you can inspect them from the console.</p>
+    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/canvas" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
+  </div>
+
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/main.js"></script>
+
+
+
 </body>
 
 </html>
