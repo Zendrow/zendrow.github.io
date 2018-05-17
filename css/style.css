@@ -42,6 +42,12 @@ input[type="checkbox"]{
   
 }
 
+input {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
 
 input:active {
   display: none;
@@ -100,7 +106,7 @@ input::before {
 .switch-label:after {
   content: attr(data-on);
   left: 11px;
-  color: white;
+  color: red;
   text-shadow: 0 1px rgba(0, 0, 0, 0.2);
   opacity: 0;
 }
