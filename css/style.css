@@ -30,6 +30,10 @@
   background: white;
 }
 
+.switch:focus {
+  display: none;
+}
+
 input[type="checkbox"]{
   position: absolute;
   clip: rect(0, 0, 0, 0);
