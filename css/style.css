@@ -42,17 +42,12 @@ input[type="checkbox"]{
   
 }
 
-input::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-
 .switch-input {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
-  
+  background-color: red; 
 }
 
 .switch-label {
