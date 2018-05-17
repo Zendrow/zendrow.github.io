@@ -42,6 +42,11 @@ input[type="checkbox"]{
   
 }
 
+
+input:active {
+  display: none;
+}
+
 .switch-input {
   position: absolute;
   top: 0;
