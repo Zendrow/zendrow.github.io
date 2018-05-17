@@ -16,71 +16,24 @@
   width: 56px;
   height: 20px;
   padding: 3px;
-  background-color: red;
-  border-radius: 0;
+  background-color: white;
+  border-radius: 18px;
   box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
- 
-  background-image: -webkit-linear-gradient(top, #eeeeee, red 25px);
-  background-image: -moz-linear-gradient(top, #eeeeee, red 25px);
-  background-image: -o-linear-gradient(top, #eeeeee, red 25px);
-  background-image: linear-gradient(to bottom, #eeeeee, red 25px);
+  background-image: -webkit-linear-gradient(top, #eeeeee, white 25px);
+  background-image: -moz-linear-gradient(top, #eeeeee, white 25px);
+  background-image: -o-linear-gradient(top, #eeeeee, white 25px);
+  background-image: linear-gradient(to bottom, #eeeeee, white 25px);
   
   font: 13px/20px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #404040;
   background: white;
 }
 
-.switch:focus {
-  display: none;
-}
-
-input[type="checkbox"]{
-  position: absolute;
-  clip: rect(0, 0, 0, 0);
-  pointer-events: none;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 0;
-  background: none;
-  margin: 4px 0 0;
-  margin-top: 1px \9;
-  line-height: normal;
-  
-}
-
-input[type="checkbox"]:focus {
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
-
-input {
-  margin: 0;
-  font: inherit;
-  color: inherit;
-  -webkit-tap-highlight-color: #eeeeee;
-  -webkit-tap-highlight-color: transparent;
-}
-
-
-input:active {
-  display: none;
-}
-
-input::after{
-  display: none;
-}
-
-input::before {
-  display: none;
-}
-
 .switch-input {
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 1;
-  background-color: red; 
+  opacity: 0;
 }
 
 .switch-label {
@@ -89,24 +42,18 @@ input::before {
   height: inherit;
   font-size: 10px;
   text-transform: uppercase;
-  background: red;
-  border-radius: 0px;
+  background: #eceeef;
+  border-radius: inherit;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
   -webkit-transition: 0.15s ease-out;
   -moz-transition: 0.15s ease-out;
   -o-transition: 0.15s ease-out;
   transition: 0.15s ease-out;
-  
-  /* -webkit-transition-property: opacity background;
+  -webkit-transition-property: opacity background;
   -moz-transition-property: opacity background;
   -o-transition-property: opacity background;
-  transition-property: opacity background; */
+  transition-property: opacity background;
 }
-
-.switch-label::selection{
-  display: none;
-}
-
 .switch-label:before, .switch-label:after {
   position: absolute;
   top: 50%;
@@ -126,7 +73,7 @@ input::before {
 .switch-label:after {
   content: attr(data-on);
   left: 11px;
-  color: red;
+  color: white;
   text-shadow: 0 1px rgba(0, 0, 0, 0.2);
   opacity: 0;
 }
@@ -148,7 +95,7 @@ input::before {
   width: 18px;
   height: 18px;
   background: white;
-  border-radius: 0;
+  border-radius: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   background-image: -webkit-linear-gradient(top, white 40%, #f0f0f0);
   background-image: -moz-linear-gradient(top, white 40%, #f0f0f0);
@@ -168,7 +115,7 @@ input::before {
   width: 12px;
   height: 12px;
   background: #f9f9f9;
-  border-radius: 0;
+  border-radius: 6px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
   background-image: -webkit-linear-gradient(top, #eeeeee, white);
   background-image: -moz-linear-gradient(top, #eeeeee, white);
