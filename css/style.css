@@ -46,6 +46,8 @@ input {
   margin: 0;
   font: inherit;
   color: inherit;
+  -webkit-tap-highlight-color: #eeeeee;
+  -webkit-tap-highlight-color: transparent;
 }
 
 
