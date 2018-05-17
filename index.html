@@ -1,46 +1,59 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+
+<!--
+
+ *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+
+ *
+
+ *  Use of this source code is governed by a BSD-style license
+
+ *  that can be found in the LICENSE file in the root of the source
+
+ *  tree.
+
+-->
+
+<html>
+
 <head>
+	
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Simple Toggle Switch</title>
-  <link rel="stylesheet" href="css/style.css">
-  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <meta name="description" content="WebRTC code samples">
+  <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+  <meta itemprop="description" content="Client-side WebRTC code samples">
+  <meta itemprop="image" content="images/webrtc-icon-192x192.png">
+  <meta itemprop="name" content="WebRTC code samples">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta id="theme-color" name="theme-color" content="#ffffff">
+  <base target="_blank">
+
+  <title>getUserMedia to canvas</title>
+
+  <link rel="icon" sizes="192x192" href="images/webrtc-icon-192x192.png">
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/main.css">
+  
 </head>
+
 <body>
-  <div class="container">
-    <label class="switch">
-      <input type="checkbox" class="switch-input">
-      <span class="switch-label" data-on="XX" data-off="No"></span>
-      <span class="switch-handle"></span>
-    </label>
 
-    <label class="switch">
-      <input type="checkbox" class="switch-input" checked>
-      <span class="switch-label" data-on="On" data-off="Off"></span>
-      <span class="switch-handle"></span>
-    </label>
-
-    <label class="switch switch-green">
-      <input type="checkbox" class="switch-input" checked>
-      <span class="switch-label" data-on="On" data-off="Off"></span>
-      <span class="switch-handle"></span>
-    </label>
+  <div id="container">
+    <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a> <span>getUserMedia ? canvas</span></h1>
+    <video autoplay></video>
+    <button>Take snapshot</button>
+    <canvas></canvas>
+    <p>Draw a frame from the video onto the canvas element using the <code>drawImage()</code> method.</p>
+    <p>The variables <code>canvas</code>, <code>video</code> and <code>stream</code> are in global scope, so you can inspect them from the console.</p>
+    <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/canvas" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
   </div>
 
-  <div class="about">
-    <p class="about-links">
-      <a href="http://www.cssflow.com/snippets/simple-toggle-switch" target="_parent">View Article</a>
-      <a href="http://www.cssflow.com/snippets/simple-toggle-switch.zip" target="_parent">Download</a>
-    </p>
-    <p class="about-author">
-      &copy; 2013 <a href="http://thibaut.me" target="_blank">Thibaut Courouble</a> -
-      <a href="http://www.cssflow.com/mit-license" target="_blank">MIT License</a><br>
-      Original PSD by <a href="http://dribbble.com/shots/1003682-Simple-Toggle-Switch-PSD" target="_blank">Luke Etheridge</a>
-    </p>
-  </div>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/main.js"></script>
+
+
+
 </body>
+
 </html>
