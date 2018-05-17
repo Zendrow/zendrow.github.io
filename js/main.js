@@ -50,7 +50,7 @@ var constraints = {
 
   audio: false,
 
-  video: { facingMode: { exact: "environment" }
+  video: { facingMode: { exact: "environment" } }
 
 };
 
