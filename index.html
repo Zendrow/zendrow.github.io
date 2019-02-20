@@ -31,7 +31,7 @@
           console.log('ciao');
           console.log(token);
 
-          getJSONP('https://www.google.com/recaptcha/api/siteverify?token=' + token + '&response=6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo', function(data){
+          getJSONP('https://www.google.com/recaptcha/api/siteverify?secret=' + token + '&response=6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo', function(data){
           console.log(data);
           });  
 
