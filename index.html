@@ -5,12 +5,45 @@
   
     <script src="https://www.google.com/recaptcha/api.js?render=6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo"></script>
     <script>
+    function getJSONP(url, success) {
+
+    var ud = '_' + +new Date,
+      script = document.createElement('script'),
+      head = document.getElementsByTagName('head')[0] 
+              || document.documentElement;
+
+    window[ud] = function(data) {
+      head.removeChild(script);
+      success && success(data);
+    };
+
+    script.src = url.replace('callback=?', 'callback=' + ud);
+    head.appendChild(script);
+
+    }
+
+   
+
+
+
     grecaptcha.ready(function() {
         grecaptcha.execute('6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo', {action: 'homepage'}).then(function(token) {
           console.log('ciao');
           console.log(token);
+
+          getJSONP('https://www.google.com/recaptcha/api/siteverify?token=' + token + '&response=6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo', function(data){
+          console.log(data);
+          });  
+
+
+
+           
+
         });
     });
+
+
+
     </script>
 
 
