@@ -2,41 +2,22 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Drag'n'Drop</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
-    <script src="scripts/main.js"></script>
-    <script src="scripts/dropzone.js"></script>
-
-    <script src="js/fastclick.js"></script>
-    <script src="js/app.js"></script>
+  
+    <script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHA_site_key"></script>
+    <script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo', {action: 'homepage'}).then(function(token) {
+          
+        });
+    });
+    </script>
 
 
 </head>
 
 <body>
     
-    <section>
-        <h1 id="try-it-out">Try it out!</h1>
-
-        <div id="dropzone">
-            <form class="dropzone needsclick dz-clickable" id="demo-upload" action="/upload">
-
-                <div class="dz-message needsclick" style="background-color: dodgerblue;">
-                    Drop files here or click to upload.
-                    <br>
-                    <span class="note needsclick">(This is just a demo dropzone. Selected files are
-                        <strong>not</strong> actually uploaded.)</span>
-                </div>
-
-            </form>
-        </div>
-    </section>
-
-   
+  
 
 </body>
 
