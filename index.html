@@ -1,70 +1,39 @@
-<!DOCTYPE html>
 <html>
-
 <head>
-  
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo"></script>
-    <script>
-    function getJSONP(url, success) {
-
-    var ud = '_' + +new Date,
-      script = document.createElement('script'),
-      head = document.getElementsByTagName('head')[0] 
-              || document.documentElement;
-
-    window[ud] = function(data) {
-      head.removeChild(script);
-      success && success(data);
-    };
-
-    script.src = url.replace('callback=?', 'callback=' + ud);
-    head.appendChild(script);
-
+    <title>Html-Qrcode Demo</title>
+<body>
+    <div id="qr-reader" style="width:500px"></div>
+    <div id="qr-reader-results"></div>
+</body>
+<script src="/html5-qrcode.min.js"></script>
+<script>
+    function docReady(fn) {
+        // see if DOM is already available
+        if (document.readyState === "complete"
+            || document.readyState === "interactive") {
+            // call on next available tick
+            setTimeout(fn, 1);
+        } else {
+            document.addEventListener("DOMContentLoaded", fn);
+        }
     }
 
-   
+    docReady(function () {
+        var resultContainer = document.getElementById('qr-reader-results');
+        var lastResult, countResults = 0;
+        function onScanSuccess(decodedText, decodedResult) {
+            if (decodedText !== lastResult) {
+                ++countResults;
+                lastResult = decodedText;
+                // Handle on success condition with the decoded message.
+                console.log(`Scan result ${decodedText}`, decodedResult);
+            }
+        }
 
-    var key = '6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo';
-    var key2 = '6LfM1pIUAAAAADKckZgm6Gr1u4_KDZYKHxZ_wroZ';
-    var onloadCallback = function() {
-
-    var widgetId2 = grecaptcha.ready(function() {
-        grecaptcha.execute('6LfM1pIUAAAAAAxUyi2YtEpWSlrmfRhfGeTGxwMo', {action: 'login'}).then(function(token) {
-          console.log('ciao');
-          console.log(token);
-
-          // getJSONP('https://www.google.com/recaptcha/api/siteverify?secret=' + key + '&response=' + token, function(data){
-          // console.log(data);
-          // });  
-
-          getJSONP('https://www.google.com/recaptcha/api/siteverify?secret=' + key2 + '&response=' + token, function(data){
-          console.log(data);
-          });  
-
-         
-
-        });
-        
-       
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "qr-reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
     });
-
-  }
-
-
-
-    </script>
-
-
+</script>
 </head>
-
-<body>
-    
-  <form action="javascript:grecaptcha.reset();">
-    <div id="example2"></div>
-    <br>
-    <input type="submit" value="reset">
-  </form>
-
-</body>
-
 </html>
