@@ -19,7 +19,7 @@
         }
     </style>
 
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCDMZdat9fUSXlNpMLTuJ1PdY3q82J6yWo&sensor=false&defer=""&async="async"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBKwSuCbXtTNj2sHZhypytKy5JZd9Luch8&sensor=false&defer=""&async="async"></script>
 
     <script type="text/javascript">
         var directionDisplay;
@@ -52,7 +52,7 @@
 
             directionsDisplay.setMap(map);
 
-            var waypoints = [];
+            var waypoints = [{ location: new google.maps.LatLng(45.1397, 7.77395), stopover: false }];
             if (waypoints.length > 0) calcRoute();
         }
 
@@ -60,7 +60,7 @@
             var request = {
                 origin: new google.maps.LatLng(45.04897, 7.67989),
                 destination: new google.maps.LatLng(45.0489659, 7.6798926),
-                waypoints: [],
+                waypoints: [{ location: new google.maps.LatLng(45.1397, 7.77395), stopover: false }],
                 optimizeWaypoints: false,
                 travelMode: google.maps.DirectionsTravelMode.DRIVING
             };
