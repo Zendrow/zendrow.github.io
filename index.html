@@ -19,7 +19,7 @@
         }
     </style>
 
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDQ93qJFauiaOs7WurdujiJlupqMz7_wLg&sensor=false&defer=""&async="async"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCDMZdat9fUSXlNpMLTuJ1PdY3q82J6yWo&sensor=false&defer=""&async="async"></script>
 
     <script type="text/javascript">
         var directionDisplay;
@@ -28,7 +28,7 @@
         var bounds = new google.maps.LatLngBounds();
 
 
-        var markers = [];		// DATI DI OGNI PUNTO DA VISUALIZZARE SULLA MAPPA
+        var markers = [{ position: new google.maps.LatLng(45.0816342, 7.6574427), description: ' <b>N° D479</b>: LE CHIUSE 101 - MEDAIL 2-4 - Via le Chiuse, 101 - Torino' }];		// DATI DI OGNI PUNTO DA VISUALIZZARE SULLA MAPPA
 
 
         function initialize() {
@@ -58,8 +58,8 @@
 
         function calcRoute() {
             var request = {
-                origin: new google.maps.LatLng(),
-                destination: new google.maps.LatLng(),
+                origin: new google.maps.LatLng(45.04897, 7.67989),
+                destination: new google.maps.LatLng(45.0489659, 7.6798926),
                 waypoints: [],
                 optimizeWaypoints: false,
                 travelMode: google.maps.DirectionsTravelMode.DRIVING
